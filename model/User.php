@@ -1,4 +1,6 @@
 <?php
+namespace TwitterUser;
+use JsonSerializable;
 
 class User implements JsonSerializable{
     private $id;
@@ -10,7 +12,7 @@ class User implements JsonSerializable{
     private $profilePicture;
     
     
-    function __construct($id,$firstName, $lastName, $email, $username, $password, $profilePicture){
+    function __construct($id = null,$firstName = null, $lastName = null, $email = null, $username = null, $password = null, $profilePicture = null){
         $this->id = $id;
         $this->firstName = $firstName;
         $this->lastName = $lastName;

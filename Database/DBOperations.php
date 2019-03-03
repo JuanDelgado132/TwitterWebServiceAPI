@@ -59,6 +59,18 @@ final class DBOperations{
         
     }
     
+    function getUser($loginName, $password, &$user){
+        $conn = $this->establishConnection();
+        $sql = "SELECT * FROM users WHERE email = :EMAIL AND password = :PASSWORD";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(":EMAIL", $loginName, PDO::PARAM_STR);
+        $stmt->bindParam(":PASSWORD", $password, PDO::PARAM_STR);
+        $results = $stmt->fetchAll();
+        if($results != null){
+            
+        }
+    }
+    
 }
 
 

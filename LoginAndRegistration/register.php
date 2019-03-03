@@ -1,6 +1,6 @@
 <?php
-
-
+use TwitterUser\User;
+//TODO Model validation required using regex.
 require("database/DBOperations.php");
 require("model/User.php");
 $db = new DBOperations();
@@ -22,10 +22,11 @@ $userId = Rand(0000000,9999999);
 
 //Create user object
 $newUser = new User($userId, $jsonObject->{'First Name'}, $jsonObject->{'Last Name'}, $jsonObject->{'email'}, $jsonObject->{'Username'}, $password, $imageFile); 
-$code = $db->registerUser($newUser);
+//$code = $db->registerUser($newUser);
 //Send the result back to client.
-$obj = json_encode($newUser);
-echo $obj;
+$response = array("code" => "200", "user" => $newUser);
+//$obj = json_encode($newUser);
+echo json_encode($response);
 //echo json_encode(array_push($obj, "status" => 1));
 //echo json_encode(array("status" => $code));
 
