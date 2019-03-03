@@ -24,7 +24,7 @@ final class DBOperations{
         return $conn;
     }
     
-    function registerUser($user){
+    function registerUser($user, &$message){
         $conn = $this->establishConnection();
         $userSQL = "INSERT INTO users(user_id,first_name,last_name,email,username,password,profile_picture)VALUES(:ID,:First,:Last,:Email,:Username,:Pass,:Pic);";
         $picSQL = "INSERT INTO pictures(user_id,picture_path)VALUES(:ID,:Pic);";
@@ -51,9 +51,10 @@ final class DBOperations{
             $stmt->execute();
             $picStmt->execute();
         }
-        catch(Exception $e){
-            echo $e->getMessage();
-            return -1;
+        catch(PDOException $e){
+            $message = $this->translateCode($e->getCode());
+            
+           return -1;
         }
         return 1;
         
@@ -68,6 +69,14 @@ final class DBOperations{
         $results = $stmt->fetchAll();
         if($results != null){
             
+        }
+    }
+    function translateCode($code){
+        switch ($code){
+            case 23000:
+                return "An account with that email already exists please choose another";
+            default:
+                return "ERROR, something went wrong.";
         }
     }
     
